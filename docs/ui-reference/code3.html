@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestión de Clientes CRM</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#295570",
+                        "primary-hover": "#204359",
+                        "background-light": "#f9fafb",
+                        "background-dark": "#22262a",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#2b3035",
+                        "text-main": "#131516",
+                        "text-secondary": "#6b7880",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                    boxShadow: {
+                        "soft": "0 4px 20px -2px rgba(0, 0, 0, 0.05)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for table container if needed */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 6px;
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-text-main dark:text-white transition-colors duration-200">
+<div class="flex min-h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<aside class="hidden w-64 flex-col border-r border-slate-100 bg-surface-light dark:bg-surface-dark dark:border-slate-700 lg:flex sticky top-0 h-screen">
+<div class="p-6">
+<div class="flex items-center gap-3">
+<div class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white">
+<span class="material-symbols-outlined">dataset</span>
+</div>
+<div>
+<h1 class="text-base font-bold leading-none text-text-main dark:text-white">Nexus CRM</h1>
+<p class="text-xs text-text-secondary dark:text-slate-400 mt-1">v2.4.0</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-text-secondary dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">grid_view</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-bold text-primary bg-primary/10 dark:bg-primary/20 dark:text-white transition-colors" href="#">
+<span class="material-symbols-outlined fill">groups</span>
+                    Clientes
+                </a>
+<a class="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-text-secondary dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">work_outline</span>
+                    Ventas
+                </a>
+<a class="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-text-secondary dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">bar_chart</span>
+                    Reportes
+                </a>
+<a class="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-text-secondary dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">settings</span>
+                    Configuración
+                </a>
+</nav>
+<div class="p-4 border-t border-slate-100 dark:border-slate-700">
+<div class="flex items-center gap-3 rounded-lg bg-slate-50 dark:bg-slate-700/30 p-3">
+<div class="h-10 w-10 overflow-hidden rounded-full bg-slate-200" data-alt="Admin user profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAcHRpO2vNsXqzo7czjrs_yERki3hXSBgF1W_WM2TPCKUvzjn5gjjI239CunbMDvglhkhjCH76naBWfVsch-eEiO_z3leRwsTnWgXFFu0ZDO6eT8ji9qo5AnQiCnyPo3V2dBsPOG4Vgh024cxfRfDrTEclDmH-qRvLmEtAqLWjQ7YGpbmJXv6qkFVbdGCnryGkDMIhVpbD0fl3iegAVMjMoVMMvupOYaN0H9LifCHlSIbiXatwbr4NoyvM6uR0jER4AP6Tay77DduNZ"); background-size: cover; background-position: center;'></div>
+<div class="flex flex-col overflow-hidden">
+<span class="truncate text-sm font-bold text-text-main dark:text-white">Admin User</span>
+<span class="truncate text-xs text-text-secondary dark:text-slate-400">admin@crm.com</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-screen overflow-y-auto custom-scrollbar relative">
+<!-- Header Sticky -->
+<header class="sticky top-0 z-20 flex w-full flex-col bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md px-6 py-4 sm:px-8">
+<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+<div>
+<h1 class="text-2xl font-bold tracking-tight text-text-main dark:text-white">Clientes</h1>
+<p class="text-sm text-text-secondary dark:text-slate-400 mt-1">Gestiona tus relaciones comerciales</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative hidden sm:block">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined">search</span>
+<input class="h-10 w-64 rounded-lg border-none bg-white dark:bg-surface-dark pl-10 pr-4 text-sm font-medium text-text-main placeholder-slate-400 shadow-sm ring-1 ring-slate-200 focus:ring-2 focus:ring-primary dark:ring-slate-700 dark:text-white dark:focus:ring-primary/50 transition-all" placeholder="Buscar cliente, empresa..." type="text"/>
+</div>
+<button class="flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-bold text-white shadow-md shadow-primary/20 hover:bg-primary-hover transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Nuevo Cliente</span>
+</button>
+</div>
+</div>
+<!-- Filters -->
+<div class="mt-6 flex flex-wrap items-center gap-6 border-b border-slate-200 dark:border-slate-700 pb-1">
+<button class="relative pb-3 text-sm font-bold text-primary after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-primary after:content-[''] dark:text-white">
+                        Todos (124)
+                    </button>
+<button class="relative pb-3 text-sm font-medium text-text-secondary hover:text-text-main dark:text-slate-400 dark:hover:text-slate-200 transition-colors">
+                        Leads (45)
+                    </button>
+<button class="relative pb-3 text-sm font-medium text-text-secondary hover:text-text-main dark:text-slate-400 dark:hover:text-slate-200 transition-colors">
+                        Clientes (70)
+                    </button>
+<button class="relative pb-3 text-sm font-medium text-text-secondary hover:text-text-main dark:text-slate-400 dark:hover:text-slate-200 transition-colors">
+                        Inactivos (9)
+                    </button>
+</div>
+</header>
+<!-- Content Body -->
+<div class="flex-1 p-6 sm:px-8">
+<!-- Table Card -->
+<div class="w-full rounded-xl bg-surface-light dark:bg-surface-dark shadow-soft ring-1 ring-slate-100 dark:ring-slate-700 overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/20">
+<th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-text-secondary dark:text-slate-400">Cliente</th>
+<th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-text-secondary dark:text-slate-400">Empresa</th>
+<th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-text-secondary dark:text-slate-400">Estado</th>
+<th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-text-secondary dark:text-slate-400">Último Contacto</th>
+<th class="px-6 py-4 text-end text-xs font-semibold uppercase tracking-wider text-text-secondary dark:text-slate-400">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-700 bg-surface-light dark:bg-surface-dark">
+<!-- Row 1 -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors cursor-pointer">
+<td class="px-6 py-5 whitespace-nowrap">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 shrink-0 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Portrait of Sofia Martinez" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDTtFVDAeMA0T7q9eadiDEVBo08I_WhYKu5bszSrCYX2j2uBv2GLEfS2c3WKSCQDQJfWSeF6YX9nnLiaiBrayTL0BTXt-ZRbIllSVGYocPmYi5iYfn_IgqTpBaQsJmSYDgZmWR3AIfdYGsy6iLwHeg1B_LveaVM9xjT8jQLmgXZWTtM8Rtkmjont3FnolSkdlT2Q8OlqVMboeKrXnzmyaj4Zv-f_P0kBT7pSDoiL7Pwv9K7B0ZgjFsYglIVMkUhdoHM7EfuzP75-ewb");'></div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-text-main dark:text-white">Sofia Martinez</span>
+<span class="text-xs text-text-secondary dark:text-slate-400">sofia@techsolutions.com</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 whitespace-nowrap text-sm font-medium text-text-main dark:text-white">
+                                        Tech Solutions Ltd.
+                                    </td>
+<td class="px-6 py-5 whitespace-nowrap">
+<span class="inline-flex items-center rounded-full bg-amber-100 dark:bg-amber-900/30 px-2.5 py-0.5 text-xs font-bold text-amber-700 dark:text-amber-400">
+                                            Lead
+                                        </span>
+</td>
+<td class="px-6 py-5 whitespace-nowrap text-sm text-text-secondary dark:text-slate-400">
+                                        Oct 24, 2023
+                                    </td>
+<td class="px-6 py-5 whitespace-nowrap text-end">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="rounded p-1.5 text-slate-400 hover:bg-white hover:text-primary hover:shadow-sm dark:hover:bg-slate-600 dark:hover:text-white transition-all">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="rounded p-1.5 text-slate-400 hover:bg-white hover:text-red-500 hover:shadow-sm dark:hover:bg-slate-600 dark:hover:text-red-400 transition-all">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors cursor-pointer">
+<td class="px-6 py-5 whitespace-nowrap">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 shrink-0 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Portrait of Carlos Ruiz" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBevLnbWk-WMghRblZRWbrBebXhfwxdlgvw0veKUcfVhaBpH84pihjv60YHXmFouBJq-Cfo0avn1O8t6uJBnFE6Jzx7JThx-uoCI66HhlWvl37YoMOzRoeO0N2yJ_84Q9W2KisO98aVme0BKN3J8xBeeNSoSaOMlZn53BZZq9qfsta-XYT1a_Y_LN-aow1lTH_p3tzLx-5TUWFGNenkNh8d6jaCKuzSb2XetA74X9frZPISk8BRtSaDN33xB8T9aWEDKrXdrnr0QwFb");'></div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-text-main dark:text-white">Carlos Ruiz</span>
+<span class="text-xs text-text-secondary dark:text-slate-400">carlos@innovate.co</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 whitespace-nowrap text-sm font-medium text-text-main dark:text-white">
+                                        Innovate Corp
+                                    </td>
+<td class="px-6 py-5 whitespace-nowrap">
+<span class="inline-flex items-center rounded-full bg-emerald-100 dark:bg-emerald-900/30 px-2.5 py-0.5 text-xs font-bold text-emerald-700 dark:text-emerald-400">
+                                            Cliente
+                                        </span>
+</td>
+<td class="px-6 py-5 whitespace-nowrap text-sm text-text-secondary dark:text-slate-400">
+                                        Nov 02, 2023
+                                    </td>
+<td class="px-6 py-5 whitespace-nowrap text-end">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="rounded p-1.5 text-slate-400 hover:bg-white hover:text-primary hover:shadow-sm dark:hover:bg-slate-600 dark:hover:text-white transition-all">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="rounded p-1.5 text-slate-400 hover:bg-white hover:text-red-500 hover:shadow-sm dark:hover:bg-slate-600 dark:hover:text-red-400 transition-all">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors cursor-pointer">
+<td class="px-6 py-5 whitespace-nowrap">
+<div class="flex items-center gap-4">
+<div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-indigo-600 dark:bg-indigo-900/50 dark:text-indigo-300 font-bold text-sm">
+                                                AL
+                                            </div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-text-main dark:text-white">Ana Lopez</span>
+<span class="text-xs text-text-secondary dark:text-slate-400">ana.lopez@freelance.net</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 whitespace-nowrap text-sm font-medium text-text-main dark:text-white">
+                                        Freelance
+                                    </td>
+<td class="px-6 py-5 whitespace-nowrap">
+<span class="inline-flex items-center rounded-full bg-slate-100 dark:bg-slate-700 px-2.5 py-0.5 text-xs font-bold text-slate-600 dark:text-slate-300">
+                                            Inactivo
+                                        </span>
+</td>
+<td class="px-6 py-5 whitespace-nowrap text-sm text-text-secondary dark:text-slate-400">
+                                        Ago 15, 2023
+                                    </td>
+<td class="px-6 py-5 whitespace-nowrap text-end">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="rounded p-1.5 text-slate-400 hover:bg-white hover:text-primary hover:shadow-sm dark:hover:bg-slate-600 dark:hover:text-white transition-all">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="rounded p-1.5 text-slate-400 hover:bg-white hover:text-red-500 hover:shadow-sm dark:hover:bg-slate-600 dark:hover:text-red-400 transition-all">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors cursor-pointer">
+<td class="px-6 py-5 whitespace-nowrap">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 shrink-0 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Portrait of Miguel Torres" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDuCmQYzuwASXeE2GoGD_wNxRaRWieVqLyzoIA-wTn3F6XkZwxS4hxBB6yyCi95HIdcb4ClYNerrA6N8SGLCOANhY3QRg95ohMkk7wGR7RUxo8P_8wA8_hdO7qA8NN_UNLW95HG_fNNyIxVc08wReYfIv1PGSRsWC4y8hj8jKQ6vrnppPIw0Z5T0yxvlHCVB6SGgAfGfN11MVEdYuS2fFtRHPoAm16VJ0yvI2JH03vL-aR281o3PKekVL6T71cRaA-kGzfDxYrJhz1O");'></div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-text-main dark:text-white">Miguel Torres</span>
+<span class="text-xs text-text-secondary dark:text-slate-400">miguel@logistics.io</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 whitespace-nowrap text-sm font-medium text-text-main dark:text-white">
+                                        Global Logistics
+                                    </td>
+<td class="px-6 py-5 whitespace-nowrap">
+<span class="inline-flex items-center rounded-full bg-emerald-100 dark:bg-emerald-900/30 px-2.5 py-0.5 text-xs font-bold text-emerald-700 dark:text-emerald-400">
+                                            Cliente
+                                        </span>
+</td>
+<td class="px-6 py-5 whitespace-nowrap text-sm text-text-secondary dark:text-slate-400">
+                                        Nov 10, 2023
+                                    </td>
+<td class="px-6 py-5 whitespace-nowrap text-end">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="rounded p-1.5 text-slate-400 hover:bg-white hover:text-primary hover:shadow-sm dark:hover:bg-slate-600 dark:hover:text-white transition-all">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="rounded p-1.5 text-slate-400 hover:bg-white hover:text-red-500 hover:shadow-sm dark:hover:bg-slate-600 dark:hover:text-red-400 transition-all">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="group hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors cursor-pointer">
+<td class="px-6 py-5 whitespace-nowrap">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 shrink-0 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Portrait of Lucia Fernandez" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuARrZ95BjnHZz1Fr48iDWqv7oCo0EjHeyUjMGTxFkNfgFPKCKGG8yx6cvN9oKqnDNkxlcnTFKeCPAiN0DwKaSR2_hcUJa6qyK1oHIZcxzWaN_f0g1wEc8TW6QEfmnu0OVn3LHTN_AzOCtiUpACBwEPc8Xwiecv0F4-dKPNHIx0BvOqLrnwrwjMge_jNVFyg90UPwhtKEDbIj7WyjBqotPt0YAblmtcbx2H3ng55qSQvFpYKvutDsAnA7WsPjsH2ejmm27RRkF6gB7OR");'></div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-text-main dark:text-white">Lucia Fernandez</span>
+<span class="text-xs text-text-secondary dark:text-slate-400">lucia@designstudio.com</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 whitespace-nowrap text-sm font-medium text-text-main dark:text-white">
+                                        Design Studio
+                                    </td>
+<td class="px-6 py-5 whitespace-nowrap">
+<span class="inline-flex items-center rounded-full bg-amber-100 dark:bg-amber-900/30 px-2.5 py-0.5 text-xs font-bold text-amber-700 dark:text-amber-400">
+                                            Lead
+                                        </span>
+</td>
+<td class="px-6 py-5 whitespace-nowrap text-sm text-text-secondary dark:text-slate-400">
+                                        Hoy, 10:30 AM
+                                    </td>
+<td class="px-6 py-5 whitespace-nowrap text-end">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="rounded p-1.5 text-slate-400 hover:bg-white hover:text-primary hover:shadow-sm dark:hover:bg-slate-600 dark:hover:text-white transition-all">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="rounded p-1.5 text-slate-400 hover:bg-white hover:text-red-500 hover:shadow-sm dark:hover:bg-slate-600 dark:hover:text-red-400 transition-all">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between border-t border-slate-100 dark:border-slate-700 px-6 py-4">
+<p class="text-sm text-text-secondary dark:text-slate-400">
+                            Mostrando <span class="font-bold text-text-main dark:text-white">1-5</span> de <span class="font-bold text-text-main dark:text-white">124</span> resultados
+                        </p>
+<div class="flex items-center gap-2">
+<button class="flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-surface-dark px-3 py-1.5 text-sm font-medium text-text-secondary dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-50 transition-colors">
+                                Anterior
+                            </button>
+<button class="flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-surface-dark px-3 py-1.5 text-sm font-medium text-text-secondary dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                                Siguiente
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
