@@ -21,7 +21,6 @@
 - ✅ Verificado Git configurado con email `luexigonzalez@gmail.com`
 - ✅ Verificado repositorio GitHub conectado: `https://github.com/Luexi/Saori-So.git`
 - ✅ Verificado archivos UI de referencia existentes (code.html, code2.html, code3.html)
-- ✅ Clonado repositorio Dolibarr para referencia en `docs/reference/dolibarr/` (16,073 archivos)
 - ✅ Creado `.gsd/SPEC.md` con especificación completa del proyecto
 - ✅ Creado `.gsd/ROADMAP.md` con 4 milestones y 16 phases
 - ✅ Creado `.gsd/STATE.md` (este archivo)
