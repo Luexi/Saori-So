@@ -1,0 +1,37 @@
+{
+    "name": "@saori/api",
+    "version": "0.1.0",
+    "description": "Saori SO - Backend API (Fastify + Prisma)",
+    "main": "src/server.js",
+    "type": "module",
+    "scripts": {
+        "dev": "nodemon src/server.js",
+        "start": "node src/server.js",
+        "db:migrate": "prisma migrate dev",
+        "db:studio": "prisma studio",
+        "db:seed": "node prisma/seed.js",
+        "db:reset": "prisma migrate reset"
+    },
+    "keywords": [
+        "erp",
+        "crm",
+        "fastify",
+        "prisma",
+        "postgresql"
+    ],
+    "author": "Luis González <luexigonzalez@gmail.com>",
+    "license": "MIT",
+    "dependencies": {
+        "fastify": "^4.25.2",
+        "@fastify/cors": "^8.5.0",
+        "@fastify/jwt": "^7.2.4",
+        "@fastify/env": "^4.3.0",
+        "@prisma/client": "^5.8.1",
+        "zod": "^3.22.4",
+        "bcrypt": "^5.1.1"
+    },
+    "devDependencies": {
+        "prisma": "^5.8.1",
+        "nodemon": "^3.0.2"
+    }
+}

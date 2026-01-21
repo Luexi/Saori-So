@@ -1,0 +1,149 @@
+// Saori SO - Prisma Schema
+// Modelo de datos para el ERP/CRM
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==========================================
+// MODELO DE AUTENTICACIÓN Y USUARIOS
+// ==========================================
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  role         UserRole @default(CASHIER)
+  name         String?
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  // Relaciones
+  sales Sale[]
+
+  @@map("users")
+}
+
+enum UserRole {
+  ADMIN    // Acceso total al sistema
+  CASHIER  // Solo puede usar el POS
+}
+
+// ==========================================
+// MODELO DE PRODUCTOS E INVENTARIO
+// ==========================================
+
+model Category {
+  id        String   @id @default(uuid())
+  name      String
+  parentId  String?  @map("parent_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relaciones
+  parent   Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children Category[] @relation("CategoryHierarchy")
+  products Product[]
+
+  @@map("categories")
+}
+
+model Product {
+  id         String   @id @default(uuid())
+  name       String
+  sku        String   @unique
+  categoryId String   @map("category_id")
+  priceBuy   Decimal  @map("price_buy") @db.Money
+  priceSell  Decimal  @map("price_sell") @db.Money
+  stock      Int      @default(0)
+  stockMin   Int      @default(0) @map("stock_min")
+  barcode    String?  @unique
+  imageUrl   String?  @map("image_url")
+  unit       String   @default("pza") // pza, kg, lt, etc.
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+// Relaciones
+  category  Category    @relation(fields: [categoryId], references: [id])
+  saleItems SaleItem[]
+
+  @@map("products")
+}
+
+// ==========================================
+// MODELO DE CLIENTES (CRM)
+// ==========================================
+
+model Customer {
+  id        String   @id @default(uuid())
+  name      String
+  email     String?
+  phone     String?
+  rfc       String?  @unique
+  address   String?
+  notes     String?  @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relaciones
+  sales Sale[]
+
+  @@map("customers")
+}
+
+// ==========================================
+// MODELO DE VENTAS (POS)
+// ==========================================
+
+model Sale {
+  id             String        @id @default(uuid())
+  customerId     String?       @map("customer_id")
+  userId         String        @map("user_id")
+  total          Decimal       @db.Money
+  subtotal       Decimal       @db.Money
+  tax            Decimal       @db.Money // IVA 16%
+  paymentMethod  PaymentMethod @map("payment_method")
+  amountReceived Decimal?      @map("amount_received") @db.Money // Solo para efectivo
+  change         Decimal?      @db.Money // Cambio devuelto
+  createdAt      DateTime      @default(now()) @map("created_at")
+
+  // Relaciones
+  customer  Customer?  @relation(fields: [customerId], references: [id])
+  user      User       @relation(fields: [userId], references: [id])
+  saleItems SaleItem[]
+
+  @@map("sales")
+}
+
+enum PaymentMethod {
+  CASH      // Efectivo
+  CARD      // Tarjeta
+  TRANSFER  // Transferencia
+}
+
+model SaleItem {
+  id        String  @id @default(uuid())
+  saleId    String  @map("sale_id")
+  productId String  @map("product_id")
+  quantity  Int
+  unitPrice Decimal @map("unit_price") @db.Money
+  subtotal  Decimal @db.Money
+
+  // Relaciones
+  sale    Sale    @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("sale_items")
+}
+
+// ==========================================
+// ÍNDICES PARA PERFORMANCE
+// ==========================================
+
+// Ya incluidos en el modelo con @unique
+// Adicionales se pueden agregar así:
+// @@index([field1, field2])

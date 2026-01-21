@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database - Local development
+  postgres:
+    image: postgres:16-alpine
+    container_name: saori-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: saori
+      POSTGRES_USER: saori
+      POSTGRES_PASSWORD: saori123
+      # Configuración adicional
+      POSTGRES_INITDB_ARGS: '--encoding=UTF8 --locale=es_MX.UTF-8'
+    ports:
+      - "5432:5432"
+    volumes:
+      # Persistencia de datos
+      - postgres_data:/var/lib/postgresql/data
+      # Scripts de inicialización (opcional)
+      - ./scripts/init-db:/docker-entrypoint-initdb.d
+    networks:
+      - saori-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U saori"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  saori-network:
+    driver: bridge
