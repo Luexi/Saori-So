@@ -127,27 +127,27 @@
 
 **Tareas**:
 
-- [ ] Crear proyecto SvelteKit en `apps/web`:
+- [x] Crear proyecto SvelteKit en `apps/web`:
   ```bash
   npm create svelte@latest apps/web
   ```
-- [ ] Instalar Tailwind CSS:
+- [x] Instalar Tailwind CSS:
   ```bash
   npx svelte-add@latest tailwindcss
   ```
-- [ ] Configurar `tailwind.config.js` con:
+- [x] Configurar `tailwind.config.js` con:
   - Colores del sistema de diseño
   - Fuente Manrope
-- [ ] Crear `src/app.html` personalizado (basado en code.html)
-- [ ] Crear `src/routes/+layout.svelte` con:
+- [x] Crear `src/app.html` personalizado (basado en code.html)
+- [x] Crear `src/routes/+layout.svelte` con:
   - Sidebar de navegación
   - Header con logo y usuario
   - Área de contenido
-- [ ] Instalar Material Symbols:
+- [x] Instalar Material Symbols:
   ```html
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
   ```
-- [ ] Crear componentes base:
+- [x] Crear componentes base:
   - `lib/components/ui/Button.svelte`
   - `lib/components/ui/Input.svelte`
   - `lib/components/ui/Card.svelte`
